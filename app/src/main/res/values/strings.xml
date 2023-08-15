@@ -22,4 +22,7 @@
     <string name="data_final_txt">Data Final</string>
     <string name="editar_pessoa_txt">Editar Pessoa</string>
     <string name="deletar_pessoa_txt">deletar pessoa</string>
+    <string name="inicio_txt">Inicio / Hoje</string>
+    <string name="calendario_txt">Calendário</string>
+    <string name="cadastrar_txt">Cadastrar</string>
 </resources>
