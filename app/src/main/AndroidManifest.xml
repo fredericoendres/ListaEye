@@ -16,15 +16,19 @@
             android:name=".view.CadastroActivity"
             android:exported="false" />
         <activity
-            android:name=".view.SplashActivity"
-            android:exported="false"
-            android:label="Splash"
-            android:theme="@style/Theme.ListaEye" />
+            android:name=".view.CalendarioActivity"
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.ListaEye">
+            android:theme="@style/Theme.ListaEye"/>
+
+        <activity
+            android:name=".view.SplashActivity"
+            android:exported="true"
+            android:label="Splash"
+            android:theme="@style/Theme.ListaEye" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

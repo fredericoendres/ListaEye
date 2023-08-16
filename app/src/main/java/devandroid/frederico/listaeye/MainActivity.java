@@ -83,25 +83,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         });
 
-        adapter.setOnDeleteClickListener(new PessoaAdapter.OnDeleteClickListener() {
-            @Override
-            public void onDeleteClick(final Pessoa pessoa) {
-                Snackbar snackbar = Snackbar.make(recyclerView, "Pessoa a ser deletada", Snackbar.LENGTH_LONG)
-                        .setAction("CONFIRMAR", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                listaVipDB.deletarObjeto(pessoa);
-                                pessoaList.remove(pessoa);
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
-                snackbar.show();
-            }
+        adapter.setOnDeleteClickListener(pessoa -> {
+            Snackbar snackbar = Snackbar.make(recyclerView, "Pessoa a ser deletada", Snackbar.LENGTH_LONG)
+                    .setAction("CONFIRMAR", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            listaVipDB.deletarObjeto(pessoa);
+                            pessoaList.remove(pessoa);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+            snackbar.show();
         });
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setAdapter(adapter);
-
 
     }
 }

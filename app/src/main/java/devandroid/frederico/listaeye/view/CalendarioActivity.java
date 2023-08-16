@@ -1,18 +1,28 @@
 package devandroid.frederico.listaeye.view;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import devandroid.frederico.listaeye.R;
 import devandroid.frederico.listaeye.controller.PessoaAdapter;
 import devandroid.frederico.listaeye.database.ListaEyeDB;
 import devandroid.frederico.listaeye.model.Pessoa;
 
-public class CalendarioActivity {
+public class CalendarioActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private PessoaAdapter adapter;
@@ -32,26 +42,64 @@ public class CalendarioActivity {
 
         final MaterialDatePicker<Long> datePicker = builder.build();
 
-        datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
-            @Override
-            public void onPositiveButtonClick(Long selection) {
-                Calendar selectedCalendar = Calendar.getInstance();
-                selectedCalendar.setTimeInMillis(selection);
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            Calendar selectedCalendar = Calendar.getInstance();
+            selectedCalendar.setTimeInMillis(selection);
 
-                List<Pessoa> pessoaList = null;
-                if (isInicio) {
-                    selectedInicioDate = selectedCalendar;
-                    showDateTimePickerDialog(false);
-                } else {
-                    selectedFimDate = selectedCalendar;
-                    pessoaList = listaVipDB.listarDadosData(selectedInicioDate, selectedFimDate);
-                    adapter.updateData(pessoaList);
-                }
-
+            List<Pessoa> pessoaList = null;
+            if (isInicio) {
+                selectedInicioDate = selectedCalendar;
+                showDateTimePickerDialog(false);
+            } else {
+                selectedFimDate = selectedCalendar;
+                pessoaList = listaVipDB.listarDadosData(selectedInicioDate, selectedFimDate);
                 adapter.updateData(pessoaList);
             }
+
+            adapter.updateData(pessoaList);
+
         });
-        datePicker.show();
+        datePicker.show(getSupportFragmentManager(), "DATE_PICKER_TAG");
     }
 
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_calendario);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        listaVipDB = new ListaEyeDB(this);
+        selectedInicioDate = Calendar.getInstance();
+        selectedFimDate = Calendar.getInstance();
+        List<Pessoa> pessoaList = listaVipDB.listarDadosData(selectedInicioDate, selectedFimDate);
+
+        ImageButton btnDataInicio = findViewById(R.id.btnDataInicio);
+        ImageButton btnDataFim =  findViewById(R.id.btnDataFim);
+        adapter = new PessoaAdapter(new ArrayList<>());
+
+        btnDataInicio.setOnClickListener(v -> showDateTimePickerDialog(true));
+
+        btnDataFim.setOnClickListener(v -> {
+            if (selectedInicioDate != null) {
+                showDateTimePickerDialog(false);
+            } else {
+                Toast.makeText(CalendarioActivity.this, "Selecione a data inicial antes", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        adapter.setOnDeleteClickListener(pessoa -> {
+            Snackbar snackbar = Snackbar.make(recyclerView, "Pessoa a ser deletada", Snackbar.LENGTH_LONG)
+                    .setAction("CONFIRMAR", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            listaVipDB.deletarObjeto(pessoa);
+                            pessoaList.remove(pessoa);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+            snackbar.show();
+        });
+        recyclerView.setAdapter(adapter);
+    }
 }
