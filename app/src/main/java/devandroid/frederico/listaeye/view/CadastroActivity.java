@@ -92,48 +92,39 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
-        btnLimpar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editPrimeiroNome.setText("");
-                editSobrenome.setText("");
-                editTelefone.setText("");
-                editCpf.setText("");
+        btnLimpar.setOnClickListener(view -> {
+            editPrimeiroNome.setText("");
+            editSobrenome.setText("");
+            editTelefone.setText("");
+            editCpf.setText("");
 
-                controller.limpar();
-            }
+            controller.limpar();
         });
 
-        btnVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnVoltar.setOnClickListener(view -> {
 
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                startActivity(intent);
+            Intent intent = new Intent(view.getContext(), MainActivity.class);
+            startActivity(intent);
 
-            }
         });
 
-        btnSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnSalvar.setOnClickListener(view -> {
 
-                pessoa.setPrimeiroNome(editPrimeiroNome.getText().toString());
-                pessoa.setSobrenome(editSobrenome.getText().toString());
-                pessoa.setTelefone(editTelefone.getText().toString());
-                pessoa.setCpf(editCpf.getText().toString());
-                pessoa.setGenero(selectedGenero);
+            pessoa.setPrimeiroNome(editPrimeiroNome.getText().toString());
+            pessoa.setSobrenome(editSobrenome.getText().toString());
+            pessoa.setTelefone(editTelefone.getText().toString());
+            pessoa.setCpf(editCpf.getText().toString());
+            pessoa.setGenero(selectedGenero);
 
-                Toast.makeText(CadastroActivity.this, "Pessoa Cadastrada", Toast.LENGTH_LONG).show();
+            Toast.makeText(CadastroActivity.this, "Pessoa Cadastrada", Toast.LENGTH_LONG).show();
 
-                controller.salvar(pessoa);
+            controller.salvar(pessoa);
 
-                editPrimeiroNome.setText("");
-                editSobrenome.setText("");
-                editTelefone.setText("");
-                editCpf.setText("");
+            editPrimeiroNome.setText("");
+            editSobrenome.setText("");
+            editTelefone.setText("");
+            editCpf.setText("");
 
-            }
         });
 
     }

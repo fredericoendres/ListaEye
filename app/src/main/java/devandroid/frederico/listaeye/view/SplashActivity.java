@@ -23,17 +23,14 @@ public class SplashActivity extends AppCompatActivity {
 
     private void comutarTelaSplash() {
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        new Handler().postDelayed(() -> {
 
-                ListaEyeDB db = new ListaEyeDB(SplashActivity.this);
+            ListaEyeDB db = new ListaEyeDB(SplashActivity.this);
 
-                Intent telaPrincipal = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(telaPrincipal);
-                finish();
+            Intent telaPrincipal = new Intent(SplashActivity.this, MainActivity.class);
+            startActivity(telaPrincipal);
+            finish();
 
-            }
         }, TIME_OUT_SPLASH);
 
     }

@@ -1,7 +1,7 @@
 package devandroid.frederico.listaeye.view;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import devandroid.frederico.listaeye.MainActivity;
 import devandroid.frederico.listaeye.R;
 import devandroid.frederico.listaeye.controller.PessoaAdapter;
 import devandroid.frederico.listaeye.database.ListaEyeDB;
@@ -29,6 +29,8 @@ public class CalendarioActivity extends AppCompatActivity {
     private ListaEyeDB listaVipDB;
     private Calendar selectedInicioDate;
     private Calendar selectedFimDate;
+
+    ImageButton btnVoltar;
 
     private void showDateTimePickerDialog(boolean isInicio) {
         Calendar calendar = Calendar.getInstance();
@@ -68,6 +70,7 @@ public class CalendarioActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        btnVoltar = findViewById(R.id.btnVerMais);
 
         listaVipDB = new ListaEyeDB(this);
         selectedInicioDate = Calendar.getInstance();
@@ -88,15 +91,19 @@ public class CalendarioActivity extends AppCompatActivity {
             }
         });
 
+        btnVoltar.setOnClickListener(view -> {
+
+            Intent intent = new Intent(view.getContext(), MainActivity.class);
+            startActivity(intent);
+
+        });
+
         adapter.setOnDeleteClickListener(pessoa -> {
             Snackbar snackbar = Snackbar.make(recyclerView, "Pessoa a ser deletada", Snackbar.LENGTH_LONG)
-                    .setAction("CONFIRMAR", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            listaVipDB.deletarObjeto(pessoa);
-                            pessoaList.remove(pessoa);
-                            adapter.notifyDataSetChanged();
-                        }
+                    .setAction("CONFIRMAR", view -> {
+                        listaVipDB.deletarObjeto(pessoa);
+                        pessoaList.remove(pessoa);
+                        adapter.notifyDataSetChanged();
                     });
             snackbar.show();
         });

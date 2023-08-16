@@ -3,7 +3,6 @@ package devandroid.frederico.listaeye;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -85,13 +84,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         adapter.setOnDeleteClickListener(pessoa -> {
             Snackbar snackbar = Snackbar.make(recyclerView, "Pessoa a ser deletada", Snackbar.LENGTH_LONG)
-                    .setAction("CONFIRMAR", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            listaVipDB.deletarObjeto(pessoa);
-                            pessoaList.remove(pessoa);
-                            adapter.notifyDataSetChanged();
-                        }
+                    .setAction("CONFIRMAR", view -> {
+                        listaVipDB.deletarObjeto(pessoa);
+                        pessoaList.remove(pessoa);
+                        adapter.notifyDataSetChanged();
                     });
             snackbar.show();
         });
