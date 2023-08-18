@@ -60,7 +60,7 @@ public class CadastroActivity extends AppCompatActivity {
         btnLimpar = findViewById(R.id.btnLimpar);
         btnSalvar = findViewById(R.id.btnSalvar);
 
-        int pessoaId = getIntent().getIntExtra("pessoaId", -1);
+        int pessoaId = getIntent().getIntExtra("id", -1);
         if (pessoaId != -1) {
             Pessoa pessoa = controller.getPessoaById(pessoaId);
 
@@ -79,6 +79,12 @@ public class CadastroActivity extends AppCompatActivity {
                 controller.dadosParaSpinner());
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(adapter);
+
+        int generoIndex = tiposDeGenero.indexOf(pessoa.getGenero());
+
+        if (generoIndex != -1) {
+            spinner.setSelection(generoIndex);
+        }
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

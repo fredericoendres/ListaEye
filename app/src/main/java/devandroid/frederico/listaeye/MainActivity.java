@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         listaVipDB = new ListaEyeDB(this);
         List<Pessoa> pessoaList = listaVipDB.listarDadosHoje();
 
-        adapter = new PessoaAdapter(pessoaList, pessoaId -> {
+
+       adapter = new PessoaAdapter(pessoaList, pessoaId -> {
             Intent intent = new Intent(MainActivity.this, CadastroActivity.class);
             intent.putExtra("id", pessoaId);
             startActivity(intent);

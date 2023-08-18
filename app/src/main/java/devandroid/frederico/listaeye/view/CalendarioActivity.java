@@ -98,6 +98,12 @@ public class CalendarioActivity extends AppCompatActivity {
 
         });
 
+        adapter = new PessoaAdapter(pessoaList, pessoaId -> {
+            Intent intent = new Intent(CalendarioActivity.this, CadastroActivity.class);
+            intent.putExtra("id", pessoaId);
+            startActivity(intent);
+        });
+
         adapter.setOnDeleteClickListener(pessoa -> {
             Snackbar snackbar = Snackbar.make(recyclerView, "Pessoa a ser deletada", Snackbar.LENGTH_LONG)
                     .setAction("CONFIRMAR", view -> {
