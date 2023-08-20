@@ -3,6 +3,8 @@ package devandroid.frederico.listaeye;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -63,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         setSupportActionBar(toolbar);
 
+        FloatingActionButton downloadButton = findViewById(R.id.download);
+        // IMPLEMENTAR METODO PRA FAZER O DOWNLOAD DA LIST DE PESSOAS PARA EXCEL
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -77,11 +82,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         List<Pessoa> pessoaList = listaVipDB.listarDadosHoje();
 
 
+
        adapter = new PessoaAdapter(pessoaList, pessoaId -> {
             Intent intent = new Intent(MainActivity.this, CadastroActivity.class);
             intent.putExtra("id", pessoaId);
             startActivity(intent);
         });
+
 
         adapter.setOnDeleteClickListener(pessoa -> {
             Snackbar snackbar = Snackbar.make(recyclerView, "Pessoa a ser deletada", Snackbar.LENGTH_LONG)
