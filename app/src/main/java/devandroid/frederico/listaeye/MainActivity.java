@@ -12,17 +12,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import devandroid.frederico.listaeye.controller.PessoaAdapter;
 import devandroid.frederico.listaeye.database.ListaEyeDB;
+import devandroid.frederico.listaeye.fragments.CadastroFragment;
 import devandroid.frederico.listaeye.model.Pessoa;
 import devandroid.frederico.listaeye.view.CadastroActivity;
-import devandroid.frederico.listaeye.view.CalendarioActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
     private RecyclerView recyclerView;
     private ListaEyeDB listaVipDB;
@@ -36,8 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.nav_calendario) {
-            Intent intent = new Intent(this, CalendarioActivity.class);
-            startActivity(intent);
+            fragmentManager.beginTransaction().replace(R.id.content_fragment, new CadastroFragment()).commit();
         } else {
             Intent intent = new Intent(this, CadastroActivity.class);
             startActivity(intent);
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         setSupportActionBar(toolbar);
 
+        fragmentManager = getSupportFragmentManager();
+
         FloatingActionButton downloadButton = findViewById(R.id.download);
         // IMPLEMENTAR METODO PRA FAZER O DOWNLOAD DA LIST DE PESSOAS PARA EXCEL
 
@@ -80,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         listaVipDB = new ListaEyeDB(this);
         List<Pessoa> pessoaList = listaVipDB.listarDadosHoje();
-
 
 
        adapter = new PessoaAdapter(pessoaList, pessoaId -> {
