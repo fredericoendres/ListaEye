@@ -1,6 +1,5 @@
 package devandroid.frederico.listaeye;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -13,14 +12,16 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import devandroid.frederico.listaeye.controller.PessoaAdapter;
 import devandroid.frederico.listaeye.database.ListaEyeDB;
 import devandroid.frederico.listaeye.fragments.CadastroFragment;
+import devandroid.frederico.listaeye.fragments.CalendarioFragment;
+import devandroid.frederico.listaeye.fragments.HojeFragment;
 import devandroid.frederico.listaeye.model.Pessoa;
-import devandroid.frederico.listaeye.view.CadastroActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,13 +37,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.nav_home) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        } else if (item.getItemId() == R.id.nav_calendario) {
+            setTitle("Cadastrados hoje");
+            fragmentManager.beginTransaction().replace(R.id.content_fragment, new HojeFragment()).commit();
+        } else if (item.getItemId() == R.id.nav_cadastro) {
+            setTitle("Cadastro de Clientes");
             fragmentManager.beginTransaction().replace(R.id.content_fragment, new CadastroFragment()).commit();
+        } else if (item.getItemId() == R.id.nav_calendario) {
+            setTitle("Selecione uma data");
+            fragmentManager.beginTransaction().replace(R.id.content_fragment, new CalendarioFragment()).commit();
         } else {
-            Intent intent = new Intent(this, CadastroActivity.class);
-            startActivity(intent);
+            fragmentManager.beginTransaction().replace(R.id.content_fragment, new HojeFragment()).commit();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -86,10 +90,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         List<Pessoa> pessoaList = listaVipDB.listarDadosHoje();
 
 
-       adapter = new PessoaAdapter(pessoaList, pessoaId -> {
-            Intent intent = new Intent(MainActivity.this, CadastroActivity.class);
-            intent.putExtra("id", pessoaId);
-            startActivity(intent);
+        adapter = new PessoaAdapter(pessoaList, pessoaId -> {
+            CadastroFragment fragment = new CadastroFragment();
+            Bundle args = new Bundle();
+            args.putInt("id", pessoaId);
+            fragment.setArguments(args);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.content_fragment, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
 

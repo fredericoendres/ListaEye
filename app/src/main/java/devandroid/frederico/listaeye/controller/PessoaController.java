@@ -1,6 +1,7 @@
 package devandroid.frederico.listaeye.controller;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -9,7 +10,6 @@ import java.util.List;
 
 import devandroid.frederico.listaeye.database.ListaEyeDB;
 import devandroid.frederico.listaeye.model.Pessoa;
-import devandroid.frederico.listaeye.view.CadastroActivity;
 
 public class PessoaController extends ListaEyeDB {
 
@@ -31,14 +31,20 @@ public class PessoaController extends ListaEyeDB {
     }
 
     SharedPreferences preferences;
-    SharedPreferences.Editor listaVip;
+    SharedPreferences.Editor listaEye;
     public static final String NOME_PREFERENCES = "pref_listavip";
 
-    public PessoaController(CadastroActivity mainActivity){
-        super(mainActivity);
-        preferences =
-                mainActivity.getSharedPreferences(NOME_PREFERENCES, 0);
-        listaVip = preferences.edit();
+    private Context context;
+    public PessoaController(Context context) {
+        super(context);
+
+        if (context == null) {
+            throw new IllegalArgumentException("Context nao pode ser nulo");
+        }
+
+        this.context = context;
+        preferences = context.getSharedPreferences(NOME_PREFERENCES, 0);
+        listaEye = preferences.edit();
     }
 
     public void salvar(Pessoa pessoa) {
@@ -46,12 +52,12 @@ public class PessoaController extends ListaEyeDB {
 
         Log.d("MVC_Controller", "Salvo: "+pessoa.toString());
 
-        listaVip.putString("primeiroNome", pessoa.getPrimeiroNome());
-        listaVip.putString("sobrenome", pessoa.getSobrenome());
-        listaVip.putString("genero", pessoa.getGenero());
-        listaVip.putString("telefone", pessoa.getTelefone());
-        listaVip.putString("cpf", pessoa.getCpf());
-        listaVip.apply();
+        listaEye.putString("primeiroNome", pessoa.getPrimeiroNome());
+        listaEye.putString("sobrenome", pessoa.getSobrenome());
+        listaEye.putString("genero", pessoa.getGenero());
+        listaEye.putString("telefone", pessoa.getTelefone());
+        listaEye.putString("cpf", pessoa.getCpf());
+        listaEye.apply();
 
         dados.put("primeiroNome", pessoa.getPrimeiroNome());
         dados.put("sobrenome", pessoa.getSobrenome());
@@ -73,8 +79,8 @@ public class PessoaController extends ListaEyeDB {
 
     public void limpar(){
 
-        listaVip.clear();
-        listaVip.apply();
+        listaEye.clear();
+        listaEye.apply();
 
     }
 
