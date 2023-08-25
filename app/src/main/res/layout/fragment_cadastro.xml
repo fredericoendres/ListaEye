@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <ImageButton
-        android:id="@+id/btnVerMais"
+        android:id="@+id/btnVoltar"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:backgroundTint="#6750A3"
@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnVerMais" />
+        app:layout_constraintTop_toBottomOf="@+id/btnVoltar" />
 
     <EditText
         android:id="@+id/editPrimeiroNome"

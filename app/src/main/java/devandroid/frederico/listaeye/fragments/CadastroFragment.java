@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class CadastroFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cadastro, container, false);
-
+        Log.d("1", "1 teste");
         controller = new PessoaController(getActivity());
         dados = controller.getListaDeDados();
         tiposDeGenero = controller.dadosParaSpinner();
@@ -67,13 +68,14 @@ public class CadastroFragment extends Fragment {
         editTelefone = view.findViewById(R.id.editTelefone);
         spinner = view.findViewById(R.id.spinner);
 
-        btnVoltar = view.findViewById(R.id.btnVerMais);
+        btnVoltar = view.findViewById(R.id.btnVoltar);
         btnLimpar = view.findViewById(R.id.btnLimpar);
         btnSalvar = view.findViewById(R.id.btnSalvar);
-
+        Log.d("2", "2 teste");
         Bundle args = getArguments();
         if (args != null) {
             int pessoaId = args.getInt("id", -1);
+
         if (pessoaId != -1) {
             Pessoa pessoa = controller.getPessoaById(pessoaId);
 
@@ -87,8 +89,9 @@ public class CadastroFragment extends Fragment {
                 spinner.setSelection(generoIndex);
             }
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
+        }
+            Log.d("3", "3 teste");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,
                 controller.dadosParaSpinner());
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinner.setAdapter(adapter);
@@ -98,7 +101,7 @@ public class CadastroFragment extends Fragment {
         if (generoIndex != -1) {
             spinner.setSelection(generoIndex);
         }
-
+            Log.d("4", "4 teste");
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -110,7 +113,7 @@ public class CadastroFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
+            Log.d("CadastroFragment", "btnSalvar clicked");
         btnLimpar.setOnClickListener(view -> {
             editPrimeiroNome.setText("");
             editSobrenome.setText("");
@@ -145,7 +148,6 @@ public class CadastroFragment extends Fragment {
             editCpf.setText("");
 
         });
-    }
         return view;
     }
 }
