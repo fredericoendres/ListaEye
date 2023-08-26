@@ -71,7 +71,7 @@ public class CadastroFragment extends Fragment {
         btnVoltar = view.findViewById(R.id.btnVoltar);
         btnLimpar = view.findViewById(R.id.btnLimpar);
         btnSalvar = view.findViewById(R.id.btnSalvar);
-        Log.d("2", "2 teste");
+
         Bundle args = getArguments();
         if (args != null) {
             int pessoaId = args.getInt("id", -1);
@@ -90,7 +90,7 @@ public class CadastroFragment extends Fragment {
             }
         }
         }
-            Log.d("3", "3 teste");
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,
                 controller.dadosParaSpinner());
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);

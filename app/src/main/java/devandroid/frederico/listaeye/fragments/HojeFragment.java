@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +28,7 @@ public class HojeFragment extends Fragment {
     private PessoaAdapter adapter;
     private ListaEyeDB listaEyeDB;
 
+    FragmentManager fragmentManager;
 
     public HojeFragment() {
     }
@@ -65,9 +67,10 @@ public class HojeFragment extends Fragment {
                     .setAction("CONFIRMAR", view -> {
                         listaEyeDB.deletarObjeto(pessoa);
                         pessoaList.remove(pessoa);
-                        adapter.notifyDataSetChanged();
+                        adapter.updateData(pessoaList);
                     });
             snackbar.show();
+
         });
 
         recyclerView.setAdapter(adapter);

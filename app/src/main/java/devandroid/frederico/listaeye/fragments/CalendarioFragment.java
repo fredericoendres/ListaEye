@@ -124,7 +124,7 @@ public class CalendarioFragment extends Fragment {
                     .setAction("CONFIRMAR", view -> {
                         listaEyeDB.deletarObjeto(pessoa);
                         pessoaList.remove(pessoa);
-                        adapter.notifyDataSetChanged();
+                        adapter.updateData(pessoaList);
                     });
             snackbar.show();
         });
