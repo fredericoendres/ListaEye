@@ -21,7 +21,16 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer" >
+
+        <TextView
+            android:id="@+id/consumir_api"
+            android:layout_width="299dp"
+            android:layout_height="513dp"
+            android:text="TextView" />
+    </com.google.android.material.navigation.NavigationView>
+
+
 
 
 

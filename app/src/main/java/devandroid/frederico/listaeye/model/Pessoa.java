@@ -1,4 +1,5 @@
 package devandroid.frederico.listaeye.model;
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -8,10 +9,15 @@ import java.util.Date;
 @DatabaseTable
 public class Pessoa {
 
+    Pessoa pessoa;
+
+
+
     @DatabaseField(generatedId = true)
     private int id;
 
     @DatabaseField(columnName = "primeiroNome")
+    @SerializedName("primeiroNome")
     private String primeiroNome;
 
     @DatabaseField(columnName = "sobrenome")
