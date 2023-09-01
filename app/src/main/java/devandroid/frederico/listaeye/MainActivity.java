@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // fragmentManager.beginTransaction().replace(R.id.content_fragment, new HojeFragment()).commit();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://demo8004616.mockable.io")

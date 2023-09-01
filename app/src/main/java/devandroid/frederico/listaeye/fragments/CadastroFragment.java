@@ -54,7 +54,6 @@ public class CadastroFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cadastro, container, false);
-        Log.d("1", "1 teste");
         controller = new PessoaController(getActivity());
         dados = controller.getListaDeDados();
         tiposDeGenero = controller.dadosParaSpinner();
@@ -101,7 +100,7 @@ public class CadastroFragment extends Fragment {
         if (generoIndex != -1) {
             spinner.setSelection(generoIndex);
         }
-            Log.d("4", "4 teste");
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -113,7 +112,7 @@ public class CadastroFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-            Log.d("CadastroFragment", "btnSalvar clicked");
+
         btnLimpar.setOnClickListener(view -> {
             editPrimeiroNome.setText("");
             editSobrenome.setText("");
